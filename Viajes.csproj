@@ -1,0 +1,78 @@
+﻿<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AFAAB5E7-DEA6-4BDF-9544-0262BFAA8BDC}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Viajes</RootNamespace>
+    <AssemblyName>Viajes</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <Externalconsole>true</Externalconsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <Externalconsole>true</Externalconsole>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Core\Autobus.cs" />
+    <Compile Include="Core\Recorrido.cs" />
+    <Compile Include="Core\RegistroViajes.cs" />
+    <Compile Include="View\MainWindowCore.cs" />
+    <Compile Include="View\WinFormsUI.cs" />
+    <Compile Include="View\ConsoleUI.cs" />
+    <Compile Include="Ppal.cs" />
+    <Compile Include="Core\Autobuses\Intercity.cs" />
+    <Compile Include="Core\Recorridos\Internacional.cs" />
+    <Compile Include="Core\Autobuses\LargaDistancia.cs" />
+    <Compile Include="Core\Autobuses\Metropolitano.cs" />
+    <Compile Include="Core\Recorridos\Nacional.cs" />
+    <Compile Include="Core\Recorridos\Provincial.cs" />
+    <Compile Include="Core\Recorridos\Interurbano.cs" />
+    <Compile Include="Core\Recorridos\Urbano.cs" />
+    <Compile Include="Core\Viaje.cs" />
+    <Compile Include="View\DlgInserta.cs" />
+    <Compile Include="View\MainWindowView.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\" />
+    <Folder Include="View\" />
+    <Folder Include="Core\Recorridos\" />
+    <Folder Include="Core\Autobuses\" />
+    <Folder Include="Res\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Samples\recorridos.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Res\bus.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
