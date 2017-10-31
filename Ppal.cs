@@ -3,7 +3,7 @@ namespace VisualViajes {
         static void Main(string[] args)
         {
             if ( args.Length > 0
-            && args[ 0 ] == "--gui" )
+              && args[ 0 ] == "--gui" )
             {
                 View.WinFormsUI.MainLoop( args );
             } else {

@@ -1,4 +1,4 @@
-namespace Viajes.Core {
+﻿namespace VisualViajes.Core {
 	public class Provincial: Recorrido {
         /// <summary>Tiempo transporte va a máxima velocidad.</summary>
         public const double PorcentajeMaxVelocidad = 0.8;
@@ -9,10 +9,16 @@ namespace Viajes.Core {
 				: base( kms )
 		{
 		}
+        
+        /// <summary>
+        /// Retorna el porcentaje de tiempo que el bus puede ir a tope.
+        /// </summary>
+        /// <value>Un valor real entre 0 y 1.</value>
+        public override double PorcentajeVMaxima => PorcentajeMaxVelocidad;
 
 		public override string ToString ()
 		{
-			return Id + "\n" + base.ToString();
+			return Id + "\n\t" + base.ToString();
 		}
 	}
 }

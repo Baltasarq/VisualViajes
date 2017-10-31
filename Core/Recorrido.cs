@@ -1,4 +1,4 @@
-namespace Viajes.Core {
+﻿namespace VisualViajes.Core {
     using System;
 
     using Recorridos;
@@ -12,47 +12,49 @@ namespace Viajes.Core {
 
 			this.Kms = kms;
 		}
-
+        
         /// <summary>
-        /// Returns a <see cref="T:System.String"/> that represents the current <see cref="T:Viajes.Core.Recorrido"/>.
+        /// Crea el recorrido que mejor se adapta a los kms. dados.
         /// </summary>
-        /// <returns>A <see cref="T:System.String"/> that represents the current <see cref="T:Viajes.Core.Recorrido"/>.</returns>
-		public override string ToString()
+        /// <returns>El <see cref="Recorrido"/> adecuado.</returns>
+        /// <param name="kms">Los kms. del viaje.</param>
+        public static Recorrido Crea(double kms)
         {
-            return string.Format("Kms: {0:.2f}", Kms);
-        }
+            Recorrido toret = null;
 
-		public static Recorrido Crea(double kms)
-		{
-			Recorrido toret = null;
-
-			if ( kms < 50 ) {
-				toret = new Urbano( kms );
-			}
-			else
-			if (kms < 100 ) {
-				toret = new Interurbano( kms );
-			}
-			else
-			if (kms < 200 ) {
-				toret = new Provincial( kms );
-			}
-			else
-			if (kms < 1000 ) {
-				toret = new Nacional( kms );
-			}
-			else {
-				toret = new Internacional( kms );
-			}
+            if ( kms < 50 ) {
+                toret = new Urbano( kms );
+            }
+            else
+            if (kms < 100 ) {
+                toret = new Interurbano( kms );
+            }
+            else
+            if (kms < 200 ) {
+                toret = new Provincial( kms );
+            }
+            else
+            if (kms < 1000 ) {
+                toret = new Nacional( kms );
+            }
+            else {
+                toret = new Internacional( kms );
+            }
             
             if ( toret == null ) {
                 throw new System.ArgumentException( "Kms: "
                                 + kms
-                                + " no se corresponden con recorrido alguno" );
+                                + " no se adaptan a recorrido alguno" );
             }
 
-			return toret;
-		}
+            return toret;
+        }        
+        
+        /// <summary>
+        /// Retorna el porcentaje de tiempo que el bus puede ir a tope.
+        /// </summary>
+        /// <value>Un valor real entre 0 y 1.</value>
+        public virtual double PorcentajeVMaxima => 0.1;
         
         /// <summary>
         /// Distancia total a recorrer.
@@ -61,6 +63,15 @@ namespace Viajes.Core {
         public double Kms {
             get; private set;
         }
+
+        /// <summary>
+        /// Una cadena que resume la info resumida de un recorrido.
+        /// </summary>
+        /// <returns>La info como cadena de caracteres.</returns>
+        public override string ToString()
+        {
+            return string.Format("Kms: {0:000.00}, Porcentaje VMax: {1}%",
+                                    this.Kms, this.PorcentajeVMaxima * 100 );
+        }
 	}
 }
-

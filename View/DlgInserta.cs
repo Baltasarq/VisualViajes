@@ -1,4 +1,4 @@
-﻿namespace Viajes.View {
+﻿namespace VisualViajes.View {
     using System.Drawing;
     using System.Windows.Forms;
     
@@ -20,7 +20,8 @@
             this.edKms = new NumericUpDown {
                 Value = 0,
                 TextAlign = HorizontalAlignment.Right,
-                Dock = DockStyle.Fill
+                Dock = DockStyle.Fill,
+                Minimum = 1
             };
 
             var lbKms = new Label {

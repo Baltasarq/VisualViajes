@@ -1,4 +1,4 @@
-namespace Viajes.View {
+﻿namespace VisualViajes.View {
     using Core;
     
     using System;

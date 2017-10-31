@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<viajes>
+    <viaje inicio="Ourense" destino="Brujas">
+        <kms>1500</kms>
+    </viaje>
+    <viaje inicio="Ourense" destino="Vigo">
+        <kms>110</kms>
+    </viaje>
+    <viaje inicio="Ourense" destino="Santa Marta de Velle">
+        <kms>3</kms>
+    </viaje>
+    <viaje inicio="Ourense" destino="Madrid">
+        <kms>500</kms>
+    </viaje>    
+    <viaje inicio="Ourense" destino="Valencia">
+        <kms>800</kms>
+    </viaje>    
+    <viaje inicio="Ourense" destino="Oviedo">
+        <kms>350</kms>
+    </viaje>    
+    <viaje inicio="Ourense" destino="Cangas">
+        <kms>130</kms>
+    </viaje>    
+    <viaje inicio="Ourense" destino="Irún">
+        <kms>600</kms>
+    </viaje>    
+</viajes>

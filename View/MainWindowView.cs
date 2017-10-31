@@ -1,4 +1,4 @@
-﻿namespace Viajes.View {
+﻿namespace VisualViajes.View {
     using System.Windows.Forms;
     using System.Drawing;
     
@@ -7,7 +7,7 @@
         {
             var assembly = System.Reflection.Assembly.GetEntryAssembly();
             var resourceAppIcon = assembly.
-                GetManifestResourceStream( "Viajes.Res.bus.png" );
+                GetManifestResourceStream( "VisualViajes.Res.bus.png" );
                 
             if ( resourceAppIcon != null ) {
                 this.Icon = Icon.FromHandle(
@@ -39,13 +39,31 @@
             this.mPpal.MenuItems.Add( this.mEditar );
             this.Menu = mPpal;
         }
-
-        private void BuildPanelLista()
+        
+        private Panel BuildPanelDetalle()
         {
-            this.pnlLista = new Panel();
-            this.pnlLista.SuspendLayout();
-            this.pnlLista.Dock = DockStyle.Fill;
-            this.pnlPpal.Controls.Add( this.pnlLista );
+            var pnlDetalle = new Panel { Dock = DockStyle.Bottom };
+            pnlDetalle.SuspendLayout();
+            
+            this.edDetalle = new TextBox {
+                Dock = DockStyle.Fill,
+                Multiline = true,
+                ReadOnly = true,
+                Font = new Font( FontFamily.GenericMonospace, 12 ),
+                ForeColor = Color.Navy,
+                BackColor = Color.LightGray
+            };
+            
+            pnlDetalle.Controls.Add( this.edDetalle );
+            pnlDetalle.ResumeLayout( false );
+            return pnlDetalle;
+        }
+
+        private Panel BuildPanelLista()
+        {
+            var pnlLista = new Panel();
+            pnlLista.SuspendLayout();
+            pnlLista.Dock = DockStyle.Fill;
 
             // Crear gridview
             this.grdLista = new DataGridView()
@@ -56,7 +74,8 @@
                 AutoGenerateColumns = false,
                 MultiSelect = false,
                 AllowUserToAddRows = false,
-                EnableHeadersVisualStyles = false
+                EnableHeadersVisualStyles = false,
+                SelectionMode = DataGridViewSelectionMode.FullRowSelect
             };
             
             this.grdLista.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
@@ -114,7 +133,7 @@
             var column4 = new DataGridViewTextBoxColumn {
                 SortMode = DataGridViewColumnSortMode.NotSortable,
                 CellTemplate = textCellTemplate4,
-                HeaderText = "Bus",
+                HeaderText = "Llegada",
                 Width = 50,
                 ReadOnly = true
             };
@@ -124,8 +143,11 @@
             } );
 
 
-            this.pnlLista.Controls.Add( this.grdLista );
-            this.pnlLista.ResumeLayout( false );
+            this.grdLista.SelectionChanged +=
+                                        (sender, e) => this.FilaSeleccionada();
+            pnlLista.Controls.Add( this.grdLista );
+            pnlLista.ResumeLayout( false );
+            return pnlLista;
         }
         
         private void BuildStatus()
@@ -136,25 +158,31 @@
 
         private void Build()
         {
-            this.SuspendLayout();
-
-            this.pnlPpal = new Panel();
-            this.pnlPpal.SuspendLayout();
-            this.pnlPpal.Dock = DockStyle.Fill;
-            this.Controls.Add( this.pnlPpal );
-
             this.BuildIcons();
             this.BuildStatus();
             this.BuildMenu();
             this.BuildPanelLista();
 
-            this.MinimumSize = new Size( 600, 400 );
+            this.SuspendLayout();
+            this.pnlPpal = new Panel()
+            {
+                Dock = DockStyle.Fill
+            };
+            
+            this.pnlPpal.SuspendLayout();
+            this.Controls.Add( this.pnlPpal );
+            this.pnlPpal.Controls.Add( this.BuildPanelLista() );
+            this.pnlPpal.Controls.Add( this.BuildPanelDetalle() );
             this.pnlPpal.ResumeLayout( false );
-            this.ResumeLayout( true );
+
+            this.MinimumSize = new Size( 600, 400 );
             this.Resize += (obj, e) => this.ResizeWindow();
             this.Text = "Visual Viajes";
+            
+            this.ResumeLayout( true );
             this.ResizeWindow();
             this.Closed += (sender, e) => this.Salir();
+            this.Shown += (sender, e) => this.Actualiza();
         }
 
         private void ResizeWindow()
@@ -173,7 +201,7 @@
                                 (int) System.Math.Floor( width *.30 ); // Org
             this.grdLista.Columns[ ColDest ].Width =
                                 (int) System.Math.Floor( width *.30 ); // Dest
-            this.grdLista.Columns[ ColBus ].Width =
+            this.grdLista.Columns[ ColHoraLLegada ].Width =
                                 (int) System.Math.Floor( width *.25 ); // Dest                                
         }
         
@@ -184,8 +212,8 @@
         private MenuItem opInsertar;
         
         private StatusBar sbStatus;
-        private Panel pnlLista;
         private Panel pnlPpal;
+        private TextBox edDetalle;
         private DataGridView grdLista;
     }
 }

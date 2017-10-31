@@ -1,4 +1,5 @@
-namespace Viajes.View {
+﻿namespace VisualViajes.View {
+    using System;
 	using System.Windows.Forms;
     
     using Core;
@@ -8,24 +9,28 @@ namespace Viajes.View {
 		public const int ColKms = 1;
 		public const int ColOrg = 2;
 		public const int ColDest = 3;
-        public const int ColBus = 4;
+        public const int ColHoraLLegada = 4;
 
 		public MainWindow()
 		{
 			this.Build();
-			this.recorridos = RegistroViajes.RecuperaXml();
-			this.Actualiza();
+			this.viajes = RegistroViajes.RecuperaXml();
 		}
         
 		private void Salir()
 		{
-			this.recorridos.GuardaXml();
+			this.viajes.GuardaXml();
 			this.Dispose( true );
 		}
 
 		private void Actualiza()
 		{
-			this.sbStatus.Text = "Viajes: " + this.recorridos.Count.ToString();
+            DateTime ahora = DateTime.Now;
+            
+			this.sbStatus.Text = "Viajes: " + this.viajes.Count.ToString()
+                            + " | " + ahora.ToShortDateString()
+                            + " | " + ahora.ToShortTimeString();
+
 			this.ActualizaLista( 0 );
 		}
 
@@ -34,7 +39,7 @@ namespace Viajes.View {
             var dlgInserta = new DlgInserta();
             
 			if ( dlgInserta.ShowDialog() == DialogResult.OK ) {
-				this.recorridos.Add( new Viaje( dlgInserta.CiudadOrigen,
+				this.viajes.Add( new Viaje( dlgInserta.CiudadOrigen,
 			                                    dlgInserta.CiudadDestino,
 			                                    dlgInserta.Kms ) );
 
@@ -46,7 +51,7 @@ namespace Viajes.View {
 
 		private void ActualizaLista(int numRow)
 		{
-            int numRecorridos = this.recorridos.Count;
+            int numRecorridos = this.viajes.Count;
             
 			// Crea y actualiza filas
 			for (int i = numRow; i < numRecorridos; ++i) {
@@ -76,14 +81,17 @@ namespace Viajes.View {
 			}
 
 			DataGridViewRow row = this.grdLista.Rows[ rowIndex ];
-			Viaje viaje = this.recorridos[ rowIndex ];
+			Viaje viaje = this.viajes[ rowIndex ];
 
             // Assign data
+            DateTime llegada = viaje.CalculaHoraLlegada();
 			row.Cells[ ColNum ].Value = ( rowIndex + 1 ).ToString().PadLeft( 4, ' ' );
 			row.Cells[ ColKms ].Value = viaje.Kms;
 			row.Cells[ ColOrg ].Value = viaje.Inicio;
 			row.Cells[ ColDest ].Value = viaje.Destino;
-            row.Cells[ ColBus ].Value = viaje.Autobus;
+            row.Cells[ ColHoraLLegada ].Value =
+				                    llegada.ToShortDateString()
+				                    + " " + llegada.ToShortTimeString();
             
             // Assign tooltip text
             foreach(DataGridViewCell cell in row.Cells) {
@@ -92,7 +100,22 @@ namespace Viajes.View {
 
 			return;
 		}
+        
+        private void FilaSeleccionada()
+        {
+            int fila = System.Math.Max( 0, this.grdLista.CurrentRow.Index );
+            
+            if ( this.viajes.Count > fila ) {
+	            this.edDetalle.Text = this.viajes[ fila ].ToString();
+	            this.edDetalle.SelectionStart = this.edDetalle.Text.Length;
+	            this.edDetalle.SelectionLength = 0;
+            } else {
+                this.edDetalle.Clear();
+            }
+            
+            return;
+        }
 
-		private RegistroViajes recorridos;
+		private RegistroViajes viajes;
 	}
 }

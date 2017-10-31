@@ -1,4 +1,4 @@
-namespace Viajes.Core.Recorridos {
+﻿namespace VisualViajes.Core.Recorridos {
 	public class Urbano: Recorrido {
         /// <summary>Tiempo transporte va a máxima velocidad.</summary>
         public const double PorcentajeMaxVelocidad = 0.1;
@@ -13,14 +13,20 @@ namespace Viajes.Core.Recorridos {
 				: base( kms )
 		{
 		}
+        
+        /// <summary>
+        /// Retorna el porcentaje de tiempo que el bus puede ir a tope.
+        /// </summary>
+        /// <value>Un valor real entre 0 y 1.</value>
+        public override double PorcentajeVMaxima => PorcentajeMaxVelocidad;
 
         /// <summary>
         /// Returns a <see cref="T:System.String"/> that represents the current <see cref="T:Viajes.Urbano"/>.
         /// </summary>
         /// <returns>A <see cref="T:System.String"/> that represents the current <see cref="T:Viajes.Urbano"/>.</returns>
-		public override string ToString ()
+		public override string ToString()
 		{
-			return Id + "\n" + base.ToString();
+			return Id + "\n\t" + base.ToString();
 		}
 	}
 }

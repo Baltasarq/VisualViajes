@@ -1,7 +1,9 @@
-namespace Viajes.Core.Autobuses {
+﻿namespace VisualViajes.Core.Autobuses {
 	public class Intercity: Autobus {
         /// <summary>Asientos totales</summary>
         public const int NumAsientosTotal = 50;
+        /// <summary>Velocidad tope</summary>
+        public const double MaxVelocidad = 100;
         /// <summary>Nombre de este transporte.</summary>
 		public const string Id = "Autocar InterCity";
         
@@ -12,6 +14,12 @@ namespace Viajes.Core.Autobuses {
             :base( NumAsientosTotal )
         {
         }
+        
+        /// <summary>
+        /// Retorna la velocidad tope del bus.
+        /// </summary>
+        /// <value>Un valor real entre 60 y 200.</value>
+        public override double VelocidadMaxima => MaxVelocidad;
 
         /// <summary>
         /// Returns a <see cref="T:System.String"/> that represents the current <see cref="T:Viajes.Core.Autobuses.Intercity"/>.

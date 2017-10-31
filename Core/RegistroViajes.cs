@@ -1,4 +1,4 @@
-namespace Viajes.Core {
+﻿namespace VisualViajes.Core {
     using System.IO;
     using System.Text;
     using System.Xml;
@@ -26,7 +26,7 @@ namespace Viajes.Core {
         /// Crea un <see cref="T:Viajes.Core.RegistroViajes"/>
         /// con los viajes dados.
         /// </summary>
-        /// <param name="viajes">Varios <see cref="Viajes"/> de partida.</param>
+        /// <param name="viajes">Varios <see cref="Viaje"/> de partida.</param>
         public RegistroViajes(IEnumerable<Viaje> viajes)
             :this()
         {
@@ -176,16 +176,23 @@ namespace Viajes.Core {
                             new XElement( EtqKms, viaje.Kms.ToString() ) ) );
             }
             
+            doc.Add( root );
             doc.Save( nf );
         }
 
+        /// <summary>
+        /// Recupera los viajes desde un archivo XML.
+        /// </summary>
+        /// <returns>Un <see cref="RegistroViajes"/> con los
+        /// <see cref="Viaje"/>'s.</returns>
+        /// <param name="f">El nombre del archivo.</param>
 		public static RegistroViajes RecuperaXml(string f)
 		{
 			var toret = new RegistroViajes();
             
             try {
                 var doc = XDocument.Load( f );
-                
+
                 if ( doc.Root != null
                   && doc.Root.Name == EtqViajes )
                 {
