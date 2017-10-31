@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Viajes", "Viajes.csproj", "{AFAAB5E7-DEA6-4BDF-9544-0262BFAA8BDC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualViajes", "VisualViajes.csproj", "{AFAAB5E7-DEA6-4BDF-9544-0262BFAA8BDC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
